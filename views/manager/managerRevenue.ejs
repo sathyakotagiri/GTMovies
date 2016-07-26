@@ -1,0 +1,52 @@
+<!-- Shows revenue -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Revenue Report</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <br>
+    <div class="row">
+        <br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="orders" class="col-xs-6">
+            <h4>Manager Revenue Report: </h4>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Revenue</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (var i = 0; i < revenue.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= revenue[i].month%>
+                    </td>
+                    <td>
+                        <%= revenue[i].revenue%>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-3"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!-- Shows a list of reviews for a movie -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order History</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <br>
+    <div class="row">
+        <br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="prefCard" class="col-xs-6">
+            <h4>Reviews for: <%= movie %></h4>
+            <br>
+            <% for(var i = 0; i < reviews.length; i++) { %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Title: <%= reviews[i].title %></h5>
+                    <h5>Reviewer: <%= reviews[i].username %></h5>
+                    <h5>Movie Title: <%= reviews[i].movie %></h5>
+                    <h5>Rating: <%= reviews[i].rating %></h5>
+                    <p>Comment: <%= reviews[i].comment %></p>
+                    <% if (reviews[i].status == 0) { %>
+                    <a href="#">/:<%= reviews[i].total %>" class="btn btn-danger" role="button">Cancel My Order</a>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+            <% if (reviewBool) { %>
+            <p><a class="btn btn-primary btn-md" href="/review/:<%= movie %>" role="button">Review Movie</a></p>
+            <% } %>
+        </div>
+    </div>
+    <div class="col-xs-3"></div>
+</div>
+</body>
+</html>

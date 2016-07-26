@@ -1,0 +1,53 @@
+<!-- Shows a list of preferred theaters -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preferred Theater</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <br>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-success"><%= message %></div>
+    <% } %>
+    <div class="row">
+        <br><br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="prefTheater" class="col-xs-7">
+            <h4>Your Preferred Theaters: </h4>
+            <br>
+
+            <% for (var i = 0; i < theater.length; i++) { %>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5>Theater ID: <%= theater[i].id %></h5>
+                    <h5>Name: <%= theater[i].name %></h5>
+                    <h5>Street: <%= theater[i].street %></h5>
+                    <h5>City: <%= theater[i].city %></h5>
+                    <h5>State: <%= theater[i].state %></h5>
+                    <h5>Zip: <%= theater[i].zip %></h5>
+                    <a href="theater/delete/:<%= theater[i].id %>" class="btn btn-danger" role="button">Delete This
+                        Theater</a>
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+    </div>
+    <div class="col-xs-3"></div>
+</div>
+</body>
+</html>
+

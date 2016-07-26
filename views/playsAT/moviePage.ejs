@@ -1,0 +1,45 @@
+<!-- Information about a movie -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= movies[0].title %></title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="row">
+        <br><br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="main content" class="col-xs-7">
+            <div class="jumbotron">
+                <h1><%= movies[0].title %></h1>
+                <p><%= movies[0].plot %></p>
+                <hr>
+                <h5><strong>Cast:</strong> <%= movies[0].cast %></h5>
+                <h5><strong>Released Date:</strong> <%= movies[0].releasedDate %></h5>
+                <h5><strong>Audience Rating:</strong> <%= movies[0].audRating %></h5>
+                <h5><strong>Average Rating:</strong> <%= movies[0].avgRating %></h5>
+                <h5><strong>Length:</strong> <%= movies[0].length %> Minutes</h5>
+                <p><br><a class="btn btn-primary btn-lg" href="/order/:<%= movies[0].title %>" role="button">Buy
+                        Ticket</a>
+                    <a class="btn btn-default btn-lg" href="/review/list/:<%= movies[0].title %>"
+                       role="button">Reviews</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

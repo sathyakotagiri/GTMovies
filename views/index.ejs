@@ -1,0 +1,228 @@
+<!-- Entry Point Page-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to GT Movies!</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <!-- show any messages that come back with authentication -->
+    <br>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+
+    <div id="javascripterr"></div>
+
+    <br>
+    <div class="row">
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="plays/at">Movies Now Playing</a></li>
+                <li><a href="/">Login</a></li>
+            </ul>
+        </div>
+
+        <div id="signinReg" class="col-xs-5">
+            <div id="reglog" class="">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" id="loginTab" class="active"><a href="#">Login</a></li>
+                    <li role="presentation" id="regTab"><a href="#">Registration</a></li>
+                </ul>
+                <div id="login">
+                    <form action="/login" method="post">
+                        <div class="form-group">
+                            <br>
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="text" name="username" class="form-control" id="logusername"
+                                   placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" name="password" class="form-control" id="" placeholder="Password">
+                        </div>
+                        Dont have an account? <a href="#registration" id="registerA">Register</a>
+                        <br><br>
+                        <button type="submit" id="logbtn" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+                <div id="registration">
+                    <form action="/register" method="post">
+                        <br>
+                        <div class="form-group" id="regForm">
+                            <label for="exampleInputEmail1">Username:</label>
+                            <input type="text" name="username" class="form-control" id="regUsername"
+                                   placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password:</label>
+                            <input type="password" name="password" class="form-control" id="passwordIn"
+                                   placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Confirm Password:</label>
+                            <input type="password" name="password_again" class="form-control" id="password_again"
+                                   placeholder="Confirm Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Email:</label>
+                            <input type="text" name="email" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="checkbox" id="mancheck">
+                            <label><input type="checkbox" name="mancheck">I'm a manager</label>
+                        </div>
+                        <div class="form-group" id="manpass2">
+                            <label for="manager password">Manager Password: </label>
+                            <input type="password" name="manpass" class="form-control" placeholder="Manager Password">
+                        </div>
+                        Have an account? <a href="#" id="loginA">Sign In</a>
+                        <br><br>
+                        <button type="submit" id="regbtn" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3"></div>
+    </div>
+</div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"
+        integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+
+<script>
+    $('#registration').hide();
+    $('#manpass2').hide();
+
+    $('#regTab').click(function (e) {
+        e.preventDefault();
+        $('#registration').show();
+        $('#mancheck').attr('checked', false);
+        $('#login').hide();
+        $('#manpass2').hide();
+        $('#regTab').addClass('active');
+        $('#loginTab').removeClass('active');
+    })
+
+    $('#registerA').click(function (e) {
+        e.preventDefault();
+        $('#registration').show();
+        $('#login').hide();
+        $('#manpass2').hide();
+        $('#regTab').addClass('active');
+        $('#loginTab').removeClass('active');
+    })
+
+    $('#loginTab').click(function (e) {
+        e.preventDefault();
+        $('#registration').hide();
+        $('#regTab').removeClass('active');
+        $('#login').show();
+        $('#loginTab').addClass('active');
+    });
+
+    $('#loginA').click(function (e) {
+        e.preventDefault();
+        $('#registration').hide();
+        $('#regTab').removeClass('active');
+        $('#login').show();
+        $('#loginTab').addClass('active');
+    });
+
+    $('input[type=checkbox]').on("click", function (e) {
+        $('#mancheck').is(':checked');
+        $('#manpass2').toggle();
+    });
+
+    //checks that LOGIN username is not too long.
+    var typingTimer;
+    var doneTypingInterval = 500;
+
+    $('#logusername').keyup(function () {
+        $('#javascripterr').removeClass("alert alert-danger");
+        $('#javascripterr').empty();
+        $('#logbtn').prop("disabled", false);
+        clearTimeout(typingTimer);
+        if ($('#logusername').val()) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+
+    function doneTyping() {
+        var inputVal = $('#logusername').val();
+        if (inputVal.length > 20) {
+            $('#javascripterr').addClass("alert alert-danger");
+            $('#javascripterr').html("Username is too long!");
+            $('#logbtn').prop("disabled", true);
+        }
+    }
+
+    //checks that REGISTRATION username is not too long.
+    $('#regUsername').keyup(function () {
+        $('#javascripterr').removeClass("alert alert-danger");
+        $('#javascripterr').empty();
+        $('#regbtn').prop("disabled", false);
+        clearTimeout(typingTimer);
+        if ($('#regUsername').val()) {
+            typingTimer = setTimeout(doneTyping3, doneTypingInterval);
+        }
+    });
+
+    function doneTyping3() {
+        var inputVal = $('#regUsername').val();
+        if (inputVal.length > 20) {
+            $('#javascripterr').addClass("alert alert-danger");
+            $('#javascripterr').html("Username is too long!");
+            $('#regbtn').prop("disabled", true);
+        }
+    }
+
+    //on keyup, start the countdown
+    $('#email').keyup(function () {
+        $('#regbtn').prop("disabled", false);
+        $('#javascripterr').removeClass("alert alert-danger");
+        $('#javascripterr').empty();
+        clearTimeout(typingTimer);
+        if ($('#email').val()) {
+            typingTimer = setTimeout(doneTyping2, doneTypingInterval);
+        }
+    });
+
+    function doneTyping2() {
+        var inputVal = $('#email').val();
+        var email_regex = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+        if (!email_regex.test(inputVal)) {
+            $('#javascripterr').addClass("alert alert-danger");
+            $('#javascripterr').html("Email's form is invalid.");
+            $('#regbtn').prop("disabled", true);
+        }
+    }
+
+    //check that passwords match
+    $('#password_again').keyup(function () {
+        $('#regbtn').prop("disabled", false);
+        $('#javascripterr').removeClass("alert alert-danger");
+        $('#javascripterr').empty();
+        clearTimeout(typingTimer);
+        if ($('#password_again').val()) {
+            typingTimer = setTimeout(doneTyping4, doneTypingInterval);
+        }
+    });
+
+    function doneTyping4() {
+        var password_input = $('#passwordIn').val();
+        var password_again = $('#password_again').val();
+        if (password_input !== password_again) {
+            $('#regbtn').prop("disabled", true);
+            $('#javascripterr').addClass("alert alert-danger");
+            $('#javascripterr').html('Passwords do not match.')
+        } else {
+
+        }
+    }
+
+</script>

@@ -1,0 +1,64 @@
+<!-- Shows a list orders -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order History</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <br>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-success"><%= message %></div>
+    <% } %>
+    <div class="row">
+        <br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="orders" class="col-xs-6">
+            <h4>Your Order History: </h4>
+            <br>
+            <% for(var i = 0; i < ordersList.length; i++) { %>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Order ID: <%= ordersList[i].OOrderID %></h3>
+                </div>
+                <div class="panel-body">
+                    <h3>Movie Title: <%= ordersList[i].MTitle %></h3>
+                    <% if (ordersList[i].OStatus == 1) { %><h5>Order Status: Canceled</h5><% } %>
+                    <% if (ordersList[i].OStatus == 2) { %><h5>Order Status: Complete</h5><% } %>
+                    <h5>Show Time: <%= ordersList[i].OShowTime %></h5>
+                    <h5>Date Purchased: <%= ordersList[i].ODatePurch %></h5>
+                    <h5>Adult Tickets: <%= ordersList[i].OAdultTickets %></h5>
+                    <h5>Children Tickets: <%= ordersList[i].OChildTickets %></h5>
+                    <h5>Senior Tickets: <%= ordersList[i].OSeniorTickets %></h5>
+                    <h5>Order Total Price: <%= ordersList[i].OTotalPrice %></h5>
+                    <h5>Audience Rating: <%= ordersList[i].MAudienceRating %></h5>
+                    <h5>Movie Length: <%= ordersList[i].MLength %></h5>
+                    <h5>Theater:
+                        <%= ordersList[i].TName %>
+                        <%= ordersList[i].TStreet %> <%= ordersList[i].TState %>, <%= ordersList[i].Tzip %>
+                    </h5>
+                    <% if (ordersList[i].OStatus == 0) { %>
+                    <a href="/order/cancel/:<%= ordersList[i].OOrderID %>/:<%= ordersList[i].OTotalPrice %>" class="btn btn-danger"
+                       role="button">Cancel My Order</a>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <div class="col-xs-3"></div>
+</div>
+</body>
+</html>

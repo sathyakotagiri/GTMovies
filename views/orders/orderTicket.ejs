@@ -1,0 +1,586 @@
+<!-- Ordering Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Ticket</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="row">
+        <br><br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="main content" class="col-xs-7">
+
+            <div class="panel panel-default" id="theaterDIV">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Choosing Theater</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <select class="form-control" id="selectTheater">
+                            <option>Select from saved theater list:</option>
+                        </select>
+                        <h5 class="text-center"><label>Or search for a theater:</label></h5>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="searchTheaterTerm" id="searchTheaterTerm" class="form-control"
+                               aria-label="..." placeholder="search by ...">
+                        <div class="input-group-btn" id="searchByDiffTerms">
+                            <button type="button"
+                                    class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Search By <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" id="searchTerm">
+                                <li><a href="#">City</a></li>
+                                <li><a href="#">State</a></li>
+                                <li><a href="#">Name</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+                    <div id="theaterresults">
+                        <br>
+                        <h4>Theater Results: </h4>
+                        <ul class="list-group" id="theaterList">
+                            <li class="list-group-item"></li>
+                        </ul>
+                    </div>
+                    <p class="text-center"><br>
+                        <button class="btn btn-primary" id="chooseShowTime">Choose Show Time</button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="showtime">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Choosing Show Time</h3>
+                </div>
+                <div class="panel-body">
+                    <h4>Show Time Results: </h4>
+                    <ul class="list-group" id="showtimeList">
+                        <li class="list-group-item"></li>
+                    </ul>
+                    <p class="text-center"><br>
+                        <button class="btn btn-primary" id="chooseQuantity">Choose Quantity</button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="quantity">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Choosing Quantity</h3>
+                </div>
+                <div class="panel-body">
+                    <h3 id="quantityMsg"></h3>
+                    <label>Adult Tickets: </label>
+                    <select class="form-control" id="selectAdult">
+                        <% for (var i = 0; i < 11 ; i++) { %>
+                        <option><%= i %></option>
+                        <% } %>
+                        >
+                    </select>
+                    <br>
+                    <label>Senior Tickets: </label>
+                    <select class="form-control" id="selectSenior">
+                        <% for (var i = 0; i < 11 ; i++) { %>
+                        <option><%= i %></option>
+                        <% } %>
+                        >
+                    </select>
+                    <br>
+                    <label>Children Tickets: </label>
+                    <select class="form-control" id="selectChildren">
+                        <% for (var i = 0; i < 11 ; i++) { %>
+                        <option><%= i %></option>
+                        <% } %>
+                        >
+                    </select>
+                    <p class="text-center"><br>
+                        <button class="btn btn-primary" id="choosePayment">Choose Payment</button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="payment">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Choosing Payment Information</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <select class="form-control" id="selectPayment">
+                            <option>Select from saved cards list:</option>
+                        </select>
+                    </div>
+                    <h4 id="paymentAlert"></h4>
+                    <form class="form-horizontal" id="paymentForm">
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">First Name: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="fName" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Last Name: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="lastN" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Card Number: </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="cardNum" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">CVV: </label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="cvv" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Expiration Date: </label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="exp" placeholder="" min="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label"> </label>
+                            <div class="col-sm-10" id="saveDiv">
+                                <input type="checkbox" id="saveCardCheck"> Save this card for later use.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label"> </label>
+                            <div class="col-sm-10" id="saveDiv">
+                                <button class="btn btn-default" type="submit" id="saveCard">Add Card</button>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="text-center"><br>
+                        <button class="btn btn-default" id="paymentTypeBtn">Change Payment Type</button>
+                        <button class="btn btn-primary" id="previewOrder">Preview Order</button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="confirmation">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="previewReceiptHeading">Preview Of Your Order</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Movie Title: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confirmedMovie"><%= movie %></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Theater: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confirmedTheater"></h5> <h5 id="saveThHead"><input type="checkbox"
+                                                                                           id="saveTheater"> Save this
+                                    theater for later use.</h5>
+                                <h5 id="confirmedTheaterID"></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Show Time: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confimedShowTime"></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Adult Tickets Quantity: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confirmedAdults"></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Senior Tickets Quantity: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confirmedSenior"></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Children Tickets Quantity: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confirmedChildren"></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label">Payment Info: </label>
+                            <div class="col-sm-10">
+                                <h5 id="confirmedPay"></h5>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputtext3" class="col-sm-2 control-label" id="subTotalLabel">Your
+                                Subtotal: </label>
+                            <div class="col-sm-10">
+                                <h5 id="subtotal"></h5>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="text-center"><br>
+                        <button class="btn btn-primary" id="confirmOrder">Confirm Order</button>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    //get list of payment info
+    $('#paymentAlert').empty();
+    $.ajax({
+                type: "GET",
+                dataType: "text",
+                url: "/my/cards"
+            })
+            .done(function (responseMsg) {
+                var obj = jQuery.parseJSON(responseMsg);
+                obj.forEach(function (card) {
+                    $('#selectPayment').append('<option>' + card.cardNo + '</option>');
+                })
+            });
+
+    //get list of preferred theaters
+    $.ajax({
+                type: "GET",
+                dataType: "text",
+                url: "/pref/theaters"
+            })
+            .done(function (responseMsg) {
+                var obj = jQuery.parseJSON(responseMsg);
+                obj.forEach(function (theater) {
+                    //<option id="">
+                    $('#selectTheater').append('<option id=\"' + theater.theaterID + '\">' + theater.theaterName + '</option>');
+                })
+            });
+
+    //default hiding
+    $('#confirmedTheaterID').hide();
+    $('#theaterresults').hide();
+    $('#showtime').hide();
+    $('#quantity').hide();
+    $('#payment').hide();
+    $('#saveThHead').hide();
+    $('#chooseQuantity').prop("disabled", true);
+    $('#chooseShowTime').prop("disabled", true);
+    $('#confirmOrder').prop("disabled", true);
+    $('#previewOrder').prop("disabled", true);
+
+    // search theater results
+    $('#searchTerm').on('click', 'li', function (e) {
+        $('#theaterresults').show();
+        $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    url: "/search/theaters" + "/:" + $('#searchTheaterTerm').val() + "/:" + $(this).text(),
+                    data: null
+                })
+                .done(function (responseMsg) {
+                    var obj = jQuery.parseJSON(responseMsg);
+                    $('#theaterList').empty();
+                    obj.forEach(function (theater) {
+                        $('#theaterList').append('<li class="list-group-item" id="' + theater.theaterID + '"' + '>' + '<a href="#">' + theater.theaterName + '</a></li>');
+                    })
+                });
+    });
+    $('#selectTheater').click(function (e) {
+        e.preventDefault();
+        var myTheat = $('#selectTheater :selected').text()
+        $('#chooseShowTime').prop("disabled", false);
+        if (myTheat.indexOf('Select') > -1) {
+            myTheat = '';
+            $('#chooseShowTime').prop("disabled", true);
+        } else {
+            $('#confirmedTheater').html(myTheat);
+            $('#confirmedTheaterID').html($('#selectTheater :selected').attr('id'));
+            $('#saveThHead').hide();
+        }
+    });
+    $('#theaterresults').on('click', 'li', function (e) {
+        $('#confirmedTheater').html($(this).text());
+        $('#confirmedTheaterID').html($(this).attr('id'));
+        $('#theaterresults').hide();
+        $('#chooseShowTime').prop("disabled", false);
+        $('#saveThHead').show();
+    });
+
+    $('#saveTheater').click(function (e) {
+        e.preventDefault();
+        $('#selectTheater').empty();
+        $('#saveThHead').hide();
+        $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    url: "/create/pref/theater/:" + $('#confirmedTheaterID').text()
+                })
+                .done(function (responseMsg) {
+                    $('#saveTheater').attr('checked', false);
+                });
+        $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    url: "/pref/theaters"
+                })
+                .done(function (responseMsg) {
+                    var obj = jQuery.parseJSON(responseMsg);
+                    obj.forEach(function (theater) {
+                        //<option id="">
+                        $('#selectTheater').append('<option id=\"' + theater.theaterID + '\">' + theater.theaterName + '</option>');
+                    })
+                });
+
+    });
+
+    $('#showtimeList').on('click', 'li', function (e) {
+        $('#confimedShowTime').html($(this).text());
+        $('#showtimeList').hide();
+        $('#chooseQuantity').prop("disabled", false);
+    });
+
+    $('#chooseQuantity').click(function (e) {
+        $('#showtime').hide(1000);
+        $('#quantity').show(1000);
+    });
+    $('#choosePayment').click(function (e) {
+        e.preventDefault();
+        var adult = $('#selectAdult :selected').text();
+        var senior = $('#selectSenior :selected').text();
+        var children = $('#selectChildren :selected').text();
+        if (adult === '0' && senior === '0' && children === '0') {
+            $('#quantityMsg').html("Must select at least 1 ticket");
+        } else {
+            $('#confirmedAdults').html(adult);
+            $('#confirmedSenior').html(senior);
+            $('#confirmedChildren').html(children);
+            $.ajax({
+                        type: "GET",
+                        dataType: "text",
+                        url: "/order/subtotal/:" + $('#confirmedAdults').text() + "/:" + $('#confirmedSenior').text() + "/:" + $('#confirmedChildren').text()
+                    })
+                    .done(function (responseMsg) {
+                        $('#subtotal').html(responseMsg);
+                    });
+            $('#quantity').hide(1000);
+            $('#payment').show(1000);
+        }
+    });
+
+    //check that card is unique
+    $('#cardNum').keyup(function () {
+        clearTimeout(typingTimer);
+        if ($('#cvv').val()) {
+            typingTimer = setTimeout(doneTyping2, doneTypingInterval);
+        }
+    });
+
+    function doneTyping2() {
+        var cvv = $('#cvv').val();
+        if (cvv.length !== 3) {
+            $('#saveCard').prop("disabled", true);
+            $('#paymentAlert').html("CVV number must be 3 digits");
+            //$('#regbtn').prop("disabled", true);
+        } else {
+            $('#saveCard').prop("disabled", false);
+            $('#paymentAlert').empty();
+        }
+    }
+
+    $('#confirmPayment').click(function (e) {
+        $('#payment').hide(1000);
+        $('#confirmOrder').prop("disabled", false);
+    });
+
+    $('#selectPayment').click(function (e) {
+        var myCard = $('#selectPayment :selected').text()
+        $('#saveCard').prop("disabled", false);
+        if (myCard.indexOf('Select') > -1) {
+            $('#previewOrder').prop("disabled", true);
+        } else {
+            $('#previewOrder').prop("disabled", false);
+            $('#confirmedPay').html(myCard);
+        }
+    });
+
+    var typingTimer;
+    var doneTypingInterval = 500;
+    //check that card is exactly 16 digits
+    $('#cardNum').keyup(function () {
+        $('#confirmedPay').empty();
+        clearTimeout(typingTimer);
+        if ($('#cardNum').val()) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+    function doneTyping() {
+        var cardVal = $('#cardNum').val();
+        if (cardVal.length > 16) {
+            $('#saveCard').prop("disabled", true);
+            $('#paymentAlert').html("Card number must be 16 digits");
+            //$('#regbtn').prop("disabled", true);
+        } else {
+            $('#saveCard').prop("disabled", false);
+            $('#paymentAlert').empty();
+        }
+        $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    url: "/check/card/unique/:" + $('#cardNum').val()
+                })
+                .done(function (responseMsg) {
+                    if (responseMsg !== "err") {
+                        $('#saveDiv').show();
+                    } else {
+                        $('#saveDiv').hide();
+                        $('#saveCard').prop("disabled", true);
+                        $('#paymentAlert').html("Please check that card is unique");
+                    }
+                });
+    }
+
+    //check that cvv is 3 digits
+    $('#cvv').keyup(function () {
+        clearTimeout(typingTimer);
+        if ($('#cvv').val()) {
+            typingTimer = setTimeout(doneTyping2, doneTypingInterval);
+        }
+    });
+    function doneTyping2() {
+        var cvv = $('#cvv').val();
+        if (cvv.length !== 3) {
+            $('#saveCard').prop("disabled", true);
+            $('#paymentAlert').html("CVV number must be 3 digits");
+            //$('#regbtn').prop("disabled", true);
+        } else {
+            $('#saveCard').prop("disabled", false);
+            $('#paymentAlert').empty();
+        }
+    }
+
+    $('#saveCard').click(function (e) {
+        e.preventDefault();
+        $('#previewOrder').prop("disabled", true);
+        if ($('#fName').val().length == 0) {
+            $('#paymentAlert').html('First name must not be empty');
+        } else if ($('#lastN').val().length == 0) {
+            $('#paymentAlert').html('Last name must not be empty');
+        } else if ($('#cardNum').val().length == 0) {
+            $('#paymentAlert').html('Card number must not be empty');
+        } else if ($('#cvv').val().length == 0) {
+            $('#paymentAlert').html('CVV must not be empty');
+        } else if ($('#exp').val().length == 0) {
+            $('#paymentAlert').html('Expiration date must not be empty');
+        } else {
+            var save = "false";
+            if ($("#saveCardCheck").is(':checked')) {
+                save = "true";
+            }
+            $('#confirmedPay').html($('#cardNum').val());
+            $.ajax({
+                        type: "POST",
+                        dataType: "text",
+                        url: "/add/card/:"
+                        + $('#cardNum').val()
+                        + "/:" + $('#exp').val()
+                        + "/:" + $('#lastN').val()
+                        + "/:" + $('#fName').val()
+                        + "/:" + $('#cvv').val()
+                        + "/:" + save
+                    })
+                    .done(function (responseMsg) {
+                        if (responseMsg === 'err') {
+                            $('#paymentAlert').html("Exp date should be greater than today's date");
+                            $('#paymentForm')[0].reset();
+                        } else {
+                            $('#confirmedPay').html(responseMsg);
+                            $('#paymentForm').toggle();
+                            $('#saveCard').prop("disabled", true);
+                            $('#previewOrder').prop("disabled", false);
+                            $('#paymentAlert').html("Card Successfully Saved");
+                            $('#paymentTypeBtn').hide();
+                        }
+                    });
+        }
+    });
+    $('#paymentForm').hide();
+    $('#addNewCard').click(function (e) {
+        e.preventDefault();
+        $('#addNewCard').hide();
+        $("#paymentTypeBtn").show();
+        $('#selectPayment').toggle();
+        $('#paymentForm').toggle();
+    });
+
+    $('#paymentTypeBtn').click(function () {
+        $('#selectPayment').toggle();
+        $('#paymentForm').toggle();
+    });
+
+    $('#previewOrder').click(function () {
+        $('#payment').hide(1000);
+        $('#confirmOrder').prop("disabled", false);
+    })
+
+    $('#chooseShowTime').click(function (e) {
+        $('#theaterDIV').hide(1000);
+        $('#showtime').show(1000);
+        $.ajax({
+                    type: "GET",
+                    dataType: "text",
+                    url: "showtime/:" + $('#confirmedMovie').html() + "/:" + $('#confirmedTheaterID').html()
+                })
+                .done(function (responseMsg) {
+                    var obj = jQuery.parseJSON(responseMsg);
+                    $('#showtimeList').empty();
+                    obj.forEach(function (show) {
+                        var st = show.showTime.replace("T", " ");
+                        st = st.replace(".000Z", "");
+                        $('#showtimeList').append('<li class="list-group-item"><a href="#">' + st + '</a></li>');
+                    })
+                });
+    });
+
+    $('#confirmOrder').click(function () {
+        $.ajax({
+                    type: "POST",
+                    dataType: "text",
+                    url: "/order/create/:"
+                    + $("#confirmedTheaterID").text() + "/:"
+                    + $("#confirmedMovie").text() + "/:"
+                    + $("#confimedShowTime").text() + "/:"
+                    + $("#subtotal").text() + "/:"
+                    + $("#confirmedSenior").text() + "/:"
+                    + $("#confirmedChildren").text() + "/:"
+                    + $("#confirmedAdults").text() + "/:"
+                    + $('#confirmedPay').text()
+                })
+                .done(function (msg) {
+                    $('#confirmation').attr("class", "panel panel-success");
+                    $('#subTotalLabel').html("Total:")
+                    $('#previewReceiptHeading').html("Your receipt for order #" + msg);
+                    $('#confirmOrder').hide();
+                })
+    });
+
+</script>
+</html>

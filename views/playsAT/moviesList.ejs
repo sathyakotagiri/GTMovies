@@ -1,0 +1,41 @@
+<!-- Shows movies playing now -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies List</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <div class="row">
+        <br><br>
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="main content" class="col-xs-6">
+            <h4>Movies Now Playing In Theaters: </h4>
+            <div class="list-group">
+                <% for(var i = 0; i < movies.length; i++) { %>
+                <% if (i == 0) { %>
+                <a href="/plays/at/movie:<%= movies[i].title %>" class="list-group-item striped active">
+                    <% } %>
+                    <a href="/plays/at/movie/:<%= movies[i].title %>" class="list-group-item striped">
+                        <h4 class="list-group-item-heading"><%= i + 1 %>: <%= movies[i].title %></h4>
+                        <p class="list-group-item-text"><%= movies[i].plot %></p>
+                        <% } %>
+                    </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!-- Form for user to leave a movie review -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%   %>
+    </title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"
+            integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+
+    <!-- load bootstrap css -->
+</head>
+<body>
+<div class="container container-fluid">
+    <br>
+    <% if (message.length > 0) { %>
+    <div class="alert alert-danger"><%= message %></div>
+    <% } %>
+    <% if (messageSuccess.length > 0) { %>
+    <div class="alert alert-success"><%= messageSuccess %></div>
+    <% } %>
+    <div id="diverr">
+    </div>
+    <div class="row">
+        <div id="side-bar" class="col-xs-2 col-xs-offset-2 container-fluid">
+            <ul class="nav nav-pills nav-stacked">
+                <% myMap.forEach(function(key, value) { %>
+                <li><a href="<%= key %>"><%= value %></a></li>
+                <% }) %>
+            </ul>
+        </div>
+        <div id="reviewform" class="col-xs-5">
+            <h3></h3>
+            <form method="post" action="/review/:<%= movieTitle %>">
+                <div><h3>Your review for: <%= movieTitle %></h3></div>
+                <h4 id="username" name="<%= user.Username %>"></h4>
+                <h5>
+                    <br>
+                    <div>
+                        <select id="example-square" name="rating">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </h5>
+                <div><br><label>Review Title: </label><input type="text" class="form-control" name="reviewTitle"
+                                                             id="reviewTitle"></div>
+                <div><br><label>Your Review:</label><textarea class="form-control" id="reviewTA" name="reviewTA"
+                                                              rows="3" placeholder="Write your review here"></textarea>
+                </div>
+                <div><br>
+                    <button class="btn btn-default" id="reviewbtn">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-xs-3"></div>
+</div>
+</body>
+</html>
+
+<script>
+    //checks that LOGIN username is not too long.
+    var typingTimer;
+    var doneTypingInterval = 250;
+
+    //check that user has review title
+    $('#reviewTitle').keyup(function () {
+        $('#diverr').removeClass("alert alert-danger");
+        $('#diverr').empty();
+        $('#reviewbtn').prop("disabled", false);
+        clearTimeout(typingTimer);
+        if ($('#reviewTitle').val()) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+
+    function doneTyping() {
+        var commentVal = $('#reviewTA').val();
+        if (commentVal.length > 300) {
+            $('#diverr').addClass("alert alert-danger");
+            $('#diverr').html("Your review is too long.");
+            $('#reviewbtn').prop("disabled", true);
+        }
+        var inputVal = $('#reviewTitle').val();
+        if (inputVal.length > 60) {
+            $('#diverr').addClass("alert alert-danger");
+            $('#diverr').html("Your title is too long!");
+            $('#reviewbtn').prop("disabled", true);
+        }
+    }
+
+    //check that user review has less than 300 characters
+    $('#reviewTA').keyup(function () {
+        $('#diverr').removeClass("alert alert-danger");
+        $('#diverr').empty();
+        $('#reviewbtn').prop("disabled", false);
+        clearTimeout(typingTimer);
+        if ($('#reviewTA').val()) {
+            typingTimer = setTimeout(doneTyping2, doneTypingInterval);
+        }
+    });
+
+    function doneTyping2() {
+        var inputVal = $('#reviewTitle').val();
+        if (inputVal.length > 60) {
+            $('#diverr').addClass("alert alert-danger");
+            $('#diverr').html("Your title is too long!");
+            $('#reviewbtn').prop("disabled", true);
+        }
+        var commentVal = $('#reviewTA').val();
+        if (commentVal.length > 300) {
+            $('#diverr').addClass("alert alert-danger");
+            $('#diverr').html("Your review is too long.");
+            $('#reviewbtn').prop("disabled", true);
+        }
+    }
+</script>
