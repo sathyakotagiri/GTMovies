@@ -21,12 +21,10 @@ module.exports = function (app, linksMap) {
      * Gets the order history.
      */
     app.get('/my/history', function (req, res) {
-        var queryStm = "SELECT Date_Purch, O.Total_Price, O.Order_ID, O.Status, O.Adult_Tickets, " +
-            "O.Child_Tickets, O.Senior_Tickets, M.Title, M.Audience_Rating, " +
-            "M.Length, O.Show_Time, T.Theater_ID, T.Name, T.Street, T.State, T.Zip " +
-            "FROM ORDER_ITEMS O, THEATER T, MOVIE M " +
-            "WHERE O.Movie_Title = M.Title " +
-            "AND O.Theater_ID = T.Theater_ID AND O.Username = ?";
+        var queryStm = "SELECT O.Total_Price, O.Status, O.Order_ID, O.Adult_Tickets," + 
+        "O.Child_Tickets, O.Senior_Tickets, M.Title, M.Audience_Rating, M.Length, O.Show_Time," + 
+        "T.Theater_ID, T.Street, T.State, T.Zip FROM ORDER_ITEMS O, THEATER T," + 
+        "MOVIE M WHERE O.Movie_Title = M.Title AND O.Theater_ID = T.Theater_ID AND O.Username = ?";
         connection.query(queryStm, req.user.Username, function (err, rows, fields) {
             if (err) {
                 console.log(err);
