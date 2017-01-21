@@ -1,5 +1,4 @@
 /**
- * Created by nguye on 7/14/2016.
  * For creating orders.
  */
 var mysql = require('mysql');
